@@ -16,6 +16,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openPractice: (combo: Combo) => ipcRenderer.send('open-practice', combo),
   closePractice: () => ipcRenderer.send('close-practice'),
 
+  getAutoLaunch: () => ipcRenderer.invoke('get-auto-launch'),
+  setAutoLaunch: (enable: boolean) => ipcRenderer.invoke('set-auto-launch', enable),
+
   getFavorites: () => ipcRenderer.invoke('get-favorites'),
   toggleFavorite: (id: string) => ipcRenderer.invoke('toggle-favorite', id),
   isFavorite: (id: string) => ipcRenderer.invoke('is-favorite', id),

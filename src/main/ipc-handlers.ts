@@ -1,4 +1,4 @@
-import { ipcMain, BrowserWindow, screen } from 'electron'
+import { ipcMain, BrowserWindow, screen, app } from 'electron'
 import { scrapeCharacterCombos } from './scraper'
 import { getCachedCombos, setCachedCombos, clearCache, getCacheInfo } from './cache'
 import { CHARACTER_NAMES } from '../renderer/types/combo'
@@ -85,6 +85,13 @@ export function registerIpcHandlers(win: BrowserWindow): void {
   // Open practice window with a combo
   ipcMain.on('open-practice', (_, combo: Combo) => {
     openPracticeWindow(combo)
+  })
+
+  // Auto-start with Windows (run in system tray on boot, waits for Tekken 8)
+  ipcMain.handle('get-auto-launch', () => app.getLoginItemSettings().openAtLogin)
+  ipcMain.handle('set-auto-launch', (_, enable: boolean) => {
+    app.setLoginItemSettings({ openAtLogin: enable, args: ['--hidden'] })
+    return enable
   })
 
   // Favorites

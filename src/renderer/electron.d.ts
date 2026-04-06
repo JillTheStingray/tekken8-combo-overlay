@@ -17,6 +17,9 @@ declare global {
       openPractice: (combo: Combo) => void
       closePractice: () => void
 
+      getAutoLaunch: () => Promise<boolean>
+      setAutoLaunch: (enable: boolean) => Promise<boolean>
+
       getFavorites: () => Promise<string[]>
       toggleFavorite: (id: string) => Promise<boolean>
       isFavorite: (id: string) => Promise<boolean>

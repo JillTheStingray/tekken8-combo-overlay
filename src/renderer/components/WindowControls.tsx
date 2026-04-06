@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useOverlayStore } from '../store/overlayStore'
 
 interface Props {
@@ -7,6 +8,18 @@ interface Props {
 export default function WindowControls({ compact }: Props) {
   const { collapsed, toggleCollapse, opacity, setOpacity, selectedCharacter, clearCharacter, isHorizontal } =
     useOverlayStore()
+
+  const [autoLaunch, setAutoLaunchState] = useState(false)
+
+  useEffect(() => {
+    window.electronAPI.getAutoLaunch().then(setAutoLaunchState)
+  }, [])
+
+  const handleAutoLaunch = async () => {
+    const next = !autoLaunch
+    await window.electronAPI.setAutoLaunch(next)
+    setAutoLaunchState(next)
+  }
 
   const handleHorizontalToggle = () => {
     window.electronAPI.toggleHorizontal()
@@ -60,6 +73,19 @@ export default function WindowControls({ compact }: Props) {
 
       {/* Center: hotkey hint */}
       <span className="text-[9px] text-white/20 font-mono">Ctrl+Shift+T toggle</span>
+
+      {/* Auto-launch with Windows toggle */}
+      <button
+        onClick={handleAutoLaunch}
+        className={`no-drag text-[9px] font-hud px-1.5 py-0.5 rounded border transition-colors ${
+          autoLaunch
+            ? 'border-overlay-accent/60 bg-overlay-accent/20 text-overlay-accent'
+            : 'border-white/10 text-white/25 hover:text-white/60 hover:border-white/25'
+        }`}
+        title={autoLaunch ? 'Auto-launch ON — disables on next Windows start' : 'Auto-launch OFF — click to launch with Windows'}
+      >
+        {autoLaunch ? '⚡ Auto' : '⚡ Auto'}
+      </button>
 
       {/* Right: opacity + layout toggle + collapse + window controls */}
       <div className="no-drag flex items-center gap-1.5">
