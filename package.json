@@ -1,0 +1,44 @@
+{
+  "name": "tekken8-combo-overlay",
+  "version": "1.0.0",
+  "description": "Tekken 8 combo lookup overlay",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "dist": "npm run build && electron-builder"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "electron-store": "^8.2.0",
+    "zustand": "^4.5.2",
+    "@tanstack/react-virtual": "^3.10.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@types/node": "^20.14.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "electron-vite": "^2.3.0",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.3"
+  },
+  "build": {
+    "appId": "com.tekken8overlay.app",
+    "productName": "Tekken 8 Combo Overlay",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "extraResources": []
+  }
+}
